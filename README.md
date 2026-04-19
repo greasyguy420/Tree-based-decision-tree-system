@@ -30,6 +30,7 @@ Each input file should follow this format:
   - Node Content
 
 ### Example:
-0 1 Are you nervous?  
-1 2 Yes Savings account  
-1 3 No Will you need to access most of the money within the next 5 years?  
+```
+0 1 Are you nervous?
+1 2 Yes Savings account
+1 3 No Will you need to access most of the money within the next 5 years?```

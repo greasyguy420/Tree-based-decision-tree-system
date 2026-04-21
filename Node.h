@@ -1,3 +1,6 @@
+#ifndef NODE_H
+#define NODE_H
+
 #include <vector>
 using namespace std;
 
@@ -15,3 +18,5 @@ public:
         parent = nullptr;
     }
 };
+
+#endif

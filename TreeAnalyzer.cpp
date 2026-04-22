@@ -210,7 +210,7 @@ bool TreeAnalyzer::isPerfect(Node* node) {
         }
         
         // all children must have same height for perfect tree
-        for (int i = 1; i < children.size(); i++) {
+        for (size_t i = 1; i < children.size(); i++) {
             if (checkPerfectHeight(children[i]) != firstChildHeight) {
                 return -1;
             }

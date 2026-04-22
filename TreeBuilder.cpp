@@ -1,4 +1,5 @@
 #include "TreeBuilder.h"
+#include <algorithm>
 
 /*
  * implementation of treebuilder for constructing linked tree from parsed lines
@@ -10,6 +11,11 @@ void TreeBuilder::buildTree(vector<ParsedLine> lines, LinkedTree &tree) {
     if (lines.empty()) {
         return;
     }
+
+    // sort by preorder position so parent child relationships are built correctly
+    sort(lines.begin(), lines.end(), [](const ParsedLine& a, const ParsedLine& b) {
+        return a.position < b.position;
+    });
     
     map<int, Node*> lastNodeAtLevel;
     
@@ -23,7 +29,7 @@ void TreeBuilder::buildTree(vector<ParsedLine> lines, LinkedTree &tree) {
     lastNodeAtLevel[0] = root;
     
     // process each remaining line and build tree structure
-    for (int i = 1; i < lines.size(); i++) {
+    for (size_t i = 1; i < lines.size(); i++) {
         ParsedLine &parsed = lines[i];
         
         // create new node with parsed data

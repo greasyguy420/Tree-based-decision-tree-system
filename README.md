@@ -1,36 +1,62 @@
 # Tree-based-decision-tree-system
-Reads tree data from files, Constructs the tree dynamically, Analyzes tree properties , and Allows interactive exploration
 
+This project builds a general linked decision tree from input files, analyzes tree properties, writes the analysis to about_tree.txt, and provides an interactive explorer.
 
 ## Project Structure
-- main.cpp  
-- Node.h  
-- LinkedTree.cpp / LinkedTree.h  
-- TreeAnalyzer.cpp / TreeAnalyzer.h  
 
-## File Descriptions
+- Node.h / Node.cpp
+- LinkedTree.h / LinkedTree.cpp
+- FileReader.h / FileReader.cpp
+- TreeBuilder.h / TreeBuilder.cpp
+- TreeAnalyzer.h / TreeAnalyzer.cpp
+- TreePrinter.h / TreePrinter.cpp
+- Explorer.h / Explorer.cpp
+- main.cpp
+- tree-car.txt
+- tree-investment.txt
 
-### Node.h
-- Defines the structure of a tree node
+## Compile Instructions (Linux cluster)
 
-### LinkedTree.h / LinkedTree.cpp
-- Implements the tree logic and operations
+Use g++ to compile all files into one executable:
 
-### main.cpp
-- Controls program flow and user interaction
+```bash
+g++ -std=c++17 -Wall -Wextra -pedantic Node.cpp LinkedTree.cpp FileReader.cpp TreeBuilder.cpp TreeAnalyzer.cpp TreePrinter.cpp Explorer.cpp main.cpp -o tree_system
+```
+
+## Run Instructions
+
+Run with the car decision file:
+
+```bash
+./tree_system tree-car.txt
+```
+
+Run with the investment decision file:
+
+```bash
+./tree_system tree-investment.txt
+```
+
+The program generates:
+
+- about_tree.txt
 
 ## Input File Format
-Each input file should follow this format:
 
-- First line: Root node content  
-- Each subsequent line contains:
-  - Level  
-  - Preorder Position  
-  - Edge Label  
-  - Node Content
+Each line is space-separated with this structure:
 
-### Example:
-```
+- level
+- preorder position
+- edge label (non-root lines)
+- node content
+
+Root line uses:
+
+- level and position, followed directly by root content
+
+Example:
+
+```text
 0 1 Are you nervous?
 1 2 Yes Savings account
 1 3 No Will you need to access most of the money within the next 5 years?

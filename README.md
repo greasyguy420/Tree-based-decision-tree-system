@@ -1,6 +1,14 @@
 # Tree-based-decision-tree-system
 
-This project builds a general linked decision tree from input files, analyzes tree properties, writes the analysis to about_tree.txt, and provides an interactive explorer.
+This project implements a general linked decision tree system for Data Structures Project 3.
+
+The program:
+
+- reads tree data from input files
+- builds a linked tree dynamically
+- analyzes tree properties
+- writes analysis results to about_tree.txt
+- supports interactive node exploration from the console
 
 ## Project Structure
 
@@ -14,6 +22,29 @@ This project builds a general linked decision tree from input files, analyzes tr
 - main.cpp
 - tree-car.txt
 - tree-investment.txt
+
+## Main Features
+
+1. Tree Construction
+
+- no hardcoded tree logic
+- works for valid input files following the required format
+- parent-child links are built dynamically
+
+2. Output File Generation
+
+- creates about_tree.txt
+- includes tree visualization with 2-dash indentation per level
+- includes edge labels in bracket format like [Yes] and [No]
+- includes root, internal and external counts, height, and preorder lists
+- includes binary tree analysis
+
+3. Interactive Exploration
+
+- prompt: Which node would you like to explore (enter position or "exit"):
+- for valid position: shows node content, one ancestor, one descendant, and one sibling
+- invalid input: Invalid input. Please try again.
+- exit input: Goodbye!
 
 ## Compile Instructions (Linux cluster)
 
@@ -40,6 +71,22 @@ Run with the investment decision file:
 The program generates:
 
 - about_tree.txt
+
+## about_tree.txt Contents
+
+The generated file includes these sections:
+
+- Tree Visualization
+- Tree Properties
+  - Root
+  - Number of internal nodes
+  - Number of external nodes
+  - Tree Height
+  - Internal Nodes (preorder)
+  - External Nodes (preorder)
+- Binary Tree Properties
+  - Binary Tree: Yes/No
+  - If binary is Yes: Proper Tree, Perfect Tree, Balanced Tree
 
 ## Input File Format
 

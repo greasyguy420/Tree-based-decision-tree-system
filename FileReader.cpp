@@ -26,19 +26,39 @@ vector<ParsedLine> FileReader::readFile(string filename) {
         
         ParsedLine parsed;
         stringstream ss(line);
+        int level, position;
         
-        // extract the four components separated by spaces from each line
-        if (ss >> parsed.level >> parsed.position >> parsed.edgeLabel) {
-            // get remaining content after label
-            getline(ss, parsed.content);
-            
-            // trim leading space from content
-            if (!parsed.content.empty() && parsed.content[0] == ' ') {
-                parsed.content = parsed.content.substr(1);
-            }
-            
-            lines.push_back(parsed);
+        // extract level and position first
+        if (!(ss >> level >> position)) {
+            continue;
         }
+        
+        parsed.level = level;
+        parsed.position = position;
+        
+        // for root nodes level 0 no edge label all remaining text is content
+        if (level == 0) {
+            parsed.edgeLabel = "";
+            string remaining;
+            getline(ss, remaining);
+            if (!remaining.empty() && remaining[0] == ' ') {
+                remaining = remaining.substr(1);
+            }
+            parsed.content = remaining;
+        } else {
+            // for non-root nodes extract edge label then remaining is content
+            if (!(ss >> parsed.edgeLabel)) {
+                continue;
+            }
+            string remaining;
+            getline(ss, remaining);
+            if (!remaining.empty() && remaining[0] == ' ') {
+                remaining = remaining.substr(1);
+            }
+            parsed.content = remaining;
+        }
+        
+        lines.push_back(parsed);
     }
     
     file.close();

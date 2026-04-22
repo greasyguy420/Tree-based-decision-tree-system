@@ -9,16 +9,16 @@ void TreePrinter::collectPrintLines(Node* node, int level, std::vector<std::stri
     // base case: no node to process
     if (!node) return;
 
-    // build indentation based on level using -- per level
+    // build indentation based on level using --- per level
     std::string indent = "";
     for (int i = 0; i < level; i++) {
-        indent += "--";
+        indent += "---";
     }
 
-    // format edge label with brackets if not root node
+    // format edge label with brackets only for non-root nodes
     std::string edgeLabel = node->getEdgeLabel();
     std::string edgePart = "";
-    if (!edgeLabel.empty()) {
+    if (level > 0 && !edgeLabel.empty()) {
         edgePart = "[" + edgeLabel + "] ";
     }
 
@@ -64,35 +64,50 @@ void TreePrinter::writeToFile(LinkedTree& tree, TreeAnalyzer& analyzer, const st
         return;
     }
 
-    // section 1: tree visualization header
-    file << "Tree Visualization\n\n";
+    // section 1: tree visualization
     file << printTree(root) << "\n\n";
 
-    // section 2: tree properties header
+    // separator line
+    file << "--------------------\n";
     file << "Tree Properties\n";
+    file << "--------------------\n\n";
+
+    // root node information
+    file << "Root: " << root->getContent() << "\n";
 
     // calculate and write counts
     int internalCount = analyzer.countInternal(root);
     int externalCount = analyzer.countExternal(root);
     int height = analyzer.getHeight(root);
 
-    file << "Internal Nodes: " << internalCount << "\n";
-    file << "External Nodes (Leaves): " << externalCount << "\n";
-    file << "Height: " << height << "\n\n";
+    file << "Number of internal nodes: " << internalCount << "\n";
+    file << "Number of external nodes: " << externalCount << "\n";
+    file << "Tree Height: " << height << "\n\n";
 
-    // section 3: binary tree analysis header
-    file << "Binary Tree Analysis\n";
+    // internal nodes list
+    std::vector<Node*> internalNodes;
+    analyzer.preorderInternal(root, internalNodes);
+    file << "Internal Nodes:\n";
+    for (Node* node : internalNodes) {
+        file << node->getContent() << "\n";
+    }
 
-    // check and write tree type properties
+    // external nodes list
+    std::vector<Node*> externalNodes;
+    analyzer.preorderExternal(root, externalNodes);
+    file << "\nExternal Nodes:\n";
+    for (Node* node : externalNodes) {
+        file << node->getContent() << "\n";
+    }
+
+    // separator line for binary tree section
+    file << "\n--------------------\n";
+    file << "Binary Tree Properties\n";
+    file << "--------------------\n\n";
+
+    // check if binary tree
     bool isBinary = analyzer.isBinary(root);
-    bool isProper = analyzer.isProper(root);
-    bool isPerfect = analyzer.isPerfect(root);
-    bool isBalanced = analyzer.isBalanced(root);
-
-    file << "Is Binary: " << (isBinary ? "Yes" : "No") << "\n";
-    file << "Is Proper: " << (isProper ? "Yes" : "No") << "\n";
-    file << "Is Perfect: " << (isPerfect ? "Yes" : "No") << "\n";
-    file << "Is Balanced: " << (isBalanced ? "Yes" : "No") << "\n";
+    file << "Binary Tree: " << (isBinary ? "Yes" : "No") << "\n";
 
     // close file
     file.close();

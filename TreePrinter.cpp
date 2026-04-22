@@ -65,11 +65,11 @@ void TreePrinter::writeToFile(LinkedTree& tree, TreeAnalyzer& analyzer, const st
     }
 
     // section 1: tree visualization header
-    file << "=== Tree Visualization ===\n\n";
+    file << "Tree Visualization\n\n";
     file << printTree(root) << "\n\n";
 
     // section 2: tree properties header
-    file << "=== Tree Properties ===\n";
+    file << "Tree Properties\n";
 
     // calculate and write counts
     int internalCount = analyzer.countInternal(root);
@@ -81,7 +81,7 @@ void TreePrinter::writeToFile(LinkedTree& tree, TreeAnalyzer& analyzer, const st
     file << "Height: " << height << "\n\n";
 
     // section 3: binary tree analysis header
-    file << "=== Binary Tree Analysis ===\n";
+    file << "Binary Tree Analysis\n";
 
     // check and write tree type properties
     bool isBinary = analyzer.isBinary(root);

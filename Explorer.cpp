@@ -51,7 +51,7 @@ std::vector<Node*> Explorer::getSiblings(Node* node) {
 
 void Explorer::displayNode(int position, Node* node) {
     // print node position and content header
-    std::cout << "\n===== Node Position " << position << " =====\n";
+    std::cout << "\nNode Position " << position << "\n";
     std::cout << "Content: " << node->getContent() << "\n";
 
     // get and display ancestors chain from root to node
@@ -94,7 +94,7 @@ void Explorer::startExploration() {
     std::string input;
     bool exploring = true;
 
-    std::cout << "\n===== Tree Explorer =====\n";
+    std::cout << "\nTree Explorer\n";
     std::cout << "Enter node position to explore or type exit to quit\n";
 
     while (exploring) {

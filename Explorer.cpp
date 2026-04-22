@@ -52,40 +52,33 @@ std::vector<Node*> Explorer::getSiblings(Node* node) {
 void Explorer::displayNode(int position, Node* node) {
     // print node position and content header
     std::cout << "\nNode Position " << position << "\n";
-    std::cout << "Content: " << node->getContent() << "\n";
+    std::cout << "Node's content: " << node->getContent() << "\n";
 
-    // get and display ancestors chain from root to node
+    // get ancestor chain and display immediate parent as ancestor
     std::vector<Node*> ancestors = getAncestors(node);
-    std::cout << "\nAncestors (path from root):\n";
-    for (size_t i = 0; i < ancestors.size(); i++) {
-        std::cout << "  ";
-        for (size_t j = 0; j < i; j++) {
-            std::cout << "  ";
-        }
-        std::cout << "-> " << ancestors[i]->getContent() << "\n";
+    if (ancestors.size() > 1) {
+        // show parent as the immediate ancestor (second to last in chain since last is the node itself)
+        std::cout << "Ancestor: " << ancestors[ancestors.size() - 2]->getContent() << "\n";
+    } else {
+        std::cout << "Ancestor: (none - this is root)\n";
     }
 
-    // get and display all descendants
+    // get descendants and display first one
     std::vector<Node*> descendants;
     getDescendants(node, descendants);
-    std::cout << "\nDescendants (" << (descendants.size() - 1) << " total):\n";
-    for (size_t i = 1; i < descendants.size(); i++) {
-        std::cout << "  - " << descendants[i]->getContent();
-        if (!descendants[i]->getEdgeLabel().empty()) {
-            std::cout << " [" << descendants[i]->getEdgeLabel() << "]";
-        }
-        std::cout << "\n";
+    if (descendants.size() > 1) {
+        // show first descendant (direct child)
+        std::cout << "Descendant: " << descendants[1]->getContent() << "\n";
+    } else {
+        std::cout << "Descendant: (none - this is a leaf)\n";
     }
 
-    // get and display siblings
+    // get siblings and display first one
     std::vector<Node*> siblings = getSiblings(node);
-    std::cout << "\nSiblings (" << siblings.size() << " total):\n";
-    if (siblings.empty()) {
-        std::cout << "  (no siblings)\n";
+    if (!siblings.empty()) {
+        std::cout << "Sibling: " << siblings[0]->getContent() << "\n";
     } else {
-        for (Node* sibling : siblings) {
-            std::cout << "  - " << sibling->getContent() << "\n";
-        }
+        std::cout << "Sibling: (none)\n";
     }
 }
 
@@ -94,17 +87,14 @@ void Explorer::startExploration() {
     std::string input;
     bool exploring = true;
 
-    std::cout << "\nTree Explorer\n";
-    std::cout << "Enter node position to explore or type exit to quit\n";
-
     while (exploring) {
-        std::cout << "\nEnter position (or exit): ";
+        std::cout << "Which node would you like to explore (enter position or \"exit\"): ";
         std::getline(std::cin, input);
 
         // check for exit command
         if (input == "exit" || input == "quit") {
             exploring = false;
-            std::cout << "Exiting explorer.\n";
+            std::cout << "Goodbye!\n";
             break;
         }
 
@@ -113,13 +103,13 @@ void Explorer::startExploration() {
         try {
             position = std::stoi(input);
         } catch (...) {
-            std::cout << "Invalid input. Please enter a valid position number.\n";
+            std::cout << "Invalid input. Please try again.\n";
             continue;
         }
 
         // look up node at position
         if (!tree.nodeExists(position)) {
-            std::cout << "No node found at position " << position << "\n";
+            std::cout << "Invalid input. Please try again.\n";
             continue;
         }
 

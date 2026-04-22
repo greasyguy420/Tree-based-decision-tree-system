@@ -9,10 +9,10 @@ void TreePrinter::collectPrintLines(Node* node, int level, std::vector<std::stri
     // base case: no node to process
     if (!node) return;
 
-    // build indentation based on level using --- per level
+    // build indentation based on level using -- (2 dashes) per level
     std::string indent = "";
     for (int i = 0; i < level; i++) {
-        indent += "---";
+        indent += "--";
     }
 
     // format edge label with brackets only for non-root nodes
@@ -108,6 +108,17 @@ void TreePrinter::writeToFile(LinkedTree& tree, TreeAnalyzer& analyzer, const st
     // check if binary tree
     bool isBinary = analyzer.isBinary(root);
     file << "Binary Tree: " << (isBinary ? "Yes" : "No") << "\n";
+
+    // if binary tree check and print additional properties
+    if (isBinary) {
+        bool isProper = analyzer.isProper(root);
+        bool isPerfect = analyzer.isPerfect(root);
+        bool isBalanced = analyzer.isBalanced(root);
+
+        file << "Proper Tree: " << (isProper ? "Yes" : "No") << "\n";
+        file << "Perfect Tree: " << (isPerfect ? "Yes" : "No") << "\n";
+        file << "Balanced Tree: " << (isBalanced ? "Yes" : "No") << "\n";
+    }
 
     // close file
     file.close();

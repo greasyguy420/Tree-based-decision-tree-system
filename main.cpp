@@ -66,13 +66,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::cout << "Output written to about_tree.txt\n";
+    std::cout << "Output written to about_tree.txt\n\n";
 
     // phase 5: start interactive explorer
-    std::cout << "Starting interactive explorer...\n";
     Explorer explorer(tree);
     explorer.startExploration();
 
-    std::cout << "Program complete\n";
     return 0;
 }
